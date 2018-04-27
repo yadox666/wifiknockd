@@ -9,6 +9,7 @@ try:
     from platform import system
     import logging.handlers
     from threading import Thread
+    from threading import Timer
     from subprocess import Popen, PIPE
     from signal import SIGINT,signal
     import ConfigParser
@@ -168,9 +169,12 @@ def GpioOn(value,timeout):
             gpio = Button(value)
             gpio.on()
             dlogger.info('Setting GPIO %s ON %s' %(gpio,msg_timeout))
-            msg_timeout = ""
         except:
             dlogger.info('Cannot set GPIO %s ON!' %gpio)
+    msg_timeout = ""
+    if timeout > 0:
+        t = threading.Timer(timeout, GpioOff, [value])
+        t.start()
 
 
 def GpioOff(value):
@@ -195,16 +199,16 @@ def OpenPorts(value,timeout):
 		port = ''.join(filter(str.isdigit, port))
                 proc = Popen(['iptables','-DINPUT','-pudp','--dport', port,'-jDROP'], shell=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE, close_fds=True)
                 dlogger.info('Requested to open UDP port %s %s' %(port, msg_timeout))
-                msg_timeout = ""
 	    else:
                 proc = Popen(['iptables','-DINPUT','-ptcp','--dport', port,'-jDROP'], shell=False, stdout=subprocess.PIPE, stderr=subprocess.PIPE, close_fds=True)
                 dlogger.info('Requested to open TCP port %s %s' %(port, msg_timeout))
-                msg_timeout = ""
         except OSError as e:
             dlogger.info('Could not open port: %s!' %port)
             os.kill(os.getpid(), SIGINT)
-            msg_timeout = ""
-
+    msg_timeout = ""
+    if timeout > 0:
+        t = threading.Timer(timeout, ClosePorts, [value])
+	t.start()
 
 def ClosePorts(value):
     global portlist
@@ -294,6 +298,10 @@ def StartAp(value,timeout):
         dlogger.info('Could not execute: %s!' %value)
         os.kill(os.getpid(), SIGINT)
         return False
+
+    if timeout > 0:
+        t = threading.Timer(timeout, StopAp)
+        t.start()
 
 
 def StopAp():
