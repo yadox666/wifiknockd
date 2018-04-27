@@ -147,5 +147,4 @@ python wifiknockd_client.py -e "service apache2 stop"
 ## Further reading:
 [PoC presented in Mundo Hacker Day 2018 - Madrid](http://mundohackerday.com/)
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/yadox666/wifiknockd/blob/master/LICENSE)
 
