@@ -1,0 +1,6 @@
+logging==0.4.9.6
+ConfigParser==3.5.0
+argparser==1.2.1
+gpiozero==1.4.1
+scapy==2.3.3
+pycrypto==2.6.1
