@@ -2,10 +2,12 @@
 
 ### BEGIN INIT INFO
 # Provides:          wifiknockd
-# Required-Start:    $remote_fs $syslog
-# Required-Stop:     $remote_fs $syslog
+# Provides:          apache2
+# Required-Start:    $local_fs $remote_fs $network $syslog $named
+# Required-Stop:     $local_fs $remote_fs $network $syslog $named
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
+# X-Interactive:     true
 # Short-Description: WiFi knockd daemon
 # Description:       WiFi knockd is a daemon that permits executing tasks in Linux
 #                    just by sending probe requests to a monitor mode wifi card.

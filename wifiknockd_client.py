@@ -238,7 +238,6 @@ try:
     listen_iface = rconfig.get('default','listen_iface')
     listen_channel = rconfig.getint('default','listen_channel')
     listen_bssid = rconfig.get('default','listen_bssid').upper()
-
     use_ack = rconfig.getboolean('default','use_ack')
     use_encryption = rconfig.getboolean('default','use_encryption')
     encryption_key = rconfig.get('default','encryption_key')
